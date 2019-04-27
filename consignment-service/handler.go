@@ -15,7 +15,7 @@ import (
 // to give you a better idea.
 type service struct {
 	session      *mgo.Session
-	vesselClient vesselProto.VesselServiceClient
+	vesselClient vesselProto.VesselService
 }
 
 func (s *service) GetRepo() Repository {
