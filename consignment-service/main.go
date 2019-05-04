@@ -14,9 +14,9 @@ import (
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/metadata"
 	"github.com/micro/go-micro/server"
+	pb "github.com/threehook/shippy/consignment-service/proto/consignment"
 	userService "github.com/threehook/shippy/user-service/proto/user"
 	vesselProto "github.com/threehook/shippy/vessel-service/proto/vessel"
-	pb "github.com/threehook/shippy/consignment-service/proto/consignment"
 )
 
 const (
@@ -32,18 +32,18 @@ func main() {
 		host = defaultHost
 	}
 
-	session, err := CreateSession(host)
+	dbclient := CreateDb(host)
 
 	// Mgo creates a 'master' session, we need to end that session
 	// before the main function closes.
-	defer session.Close()
+	//defer session.Close()
 
-	if err != nil {
-
-		// We're wrapping the error returned from our CreateSession
-		// here to add some context to the error.
-		log.Panicf("Could not connect to datastore with host %s - %v", host, err)
-	}
+	//if err != nil {
+	//
+	//	// We're wrapping the error returned from our CreateSession
+	//	// here to add some context to the error.
+	//	log.Panicf("Could not connect to datastore with host %s - %v", host, err)
+	//}
 
 	// Create a new service. Optionally include some options here.
 	srv := micro.NewService(
@@ -60,7 +60,8 @@ func main() {
 	srv.Init()
 
 	// Register handler
-	pb.RegisterShippingServiceHandler(srv.Server(), &service{session, vesselClient})
+	//pb.RegisterShippingServiceHandler(srv.Server(), &service{session, vesselClient})
+	pb.RegisterShippingServiceHandler(srv.Server(), &service{dbclient, vesselClient})
 
 	// Run the server
 	if err := srv.Run(); err != nil {

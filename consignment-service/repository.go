@@ -1,28 +1,32 @@
 package main
 
 import (
+	"context"
 	pb "github.com/threehook/shippy/consignment-service/proto/consignment"
-	"gopkg.in/mgo.v2"
+	"go.mongodb.org/mongo-driver/mongo"
+	"log"
+	"time"
 )
 
 const (
-	dbName = "shippy"
+	dbName                = "shippy"
 	consignmentCollection = "consignments"
 )
 
 type Repository interface {
-	Create(*pb.Consignment) error
+	Create(context.Context, *pb.Consignment) error
 	GetAll() ([]*pb.Consignment, error)
-	Close()
+	Close(ctx context.Context)
 }
 
 type ConsignmentRepository struct {
-	session *mgo.Session
+	client *mongo.Client
 }
 
 // Create a new consignment
-func (repo *ConsignmentRepository) Create(consignment *pb.Consignment) error {
-	return repo.collection().Insert(consignment)
+func (repo *ConsignmentRepository) Create(ctx context.Context, consignment *pb.Consignment) error {
+	_, err := repo.collection().InsertOne(ctx, consignment)
+	return err
 }
 
 // GetAll consignments
@@ -32,7 +36,21 @@ func (repo *ConsignmentRepository) GetAll() ([]*pb.Consignment, error) {
 	// We then bind our consignments variable by passing it as an argument to .All().
 	// That sets consignments to the result of the find query.
 	// There's also a `One()` function for single results.
-	err := repo.collection().Find(nil).All(&consignments)
+	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
+	cur, err := repo.collection().Find(ctx, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer cur.Close(ctx)
+	for cur.Next(ctx) {
+		var result pb.Consignment
+		//var result pb.Consignment
+		err := cur.Decode(&result)
+		if err != nil {
+			log.Fatal(err)
+		}
+		consignments = append(consignments, &result)
+	}
 	return consignments, err
 }
 
@@ -45,10 +63,10 @@ func (repo *ConsignmentRepository) GetAll() ([]*pb.Consignment, error) {
 // I.e this approach avoids locking and allows for requests to be processed concurrently. Nice!
 // But... it does mean we need to ensure each session is closed on completion. Otherwise
 // you'll likely build up loads of dud connections and hit a connection limit. Not nice!
-func (repo *ConsignmentRepository) Close() {
-	repo.session.Close()
+func (repo *ConsignmentRepository) Close(ctx context.Context) {
+	repo.client.Disconnect(ctx)
 }
 
-func (repo *ConsignmentRepository) collection() *mgo.Collection {
-	return repo.session.DB(dbName).C(consignmentCollection)
+func (repo *ConsignmentRepository) collection() *mongo.Collection {
+	return repo.client.Database(dbName).Collection(consignmentCollection)
 }

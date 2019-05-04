@@ -1,6 +1,6 @@
 FROM golang:1.12.2 as builder
 
-WORKDIR /go/src/github.com/EwanValentine/shippy/user-cli
+WORKDIR /go/src/github.com/threehook/shippy/user-cli
 
 # Force the go compiler to use modules
 ENV GO111MODULE=on
@@ -28,6 +28,6 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /app
 COPY --from=builder /go/src/github.com/threehook/shippy/user-cli/user-cli .
 
-#ENTRYPOINT ["./user-cli"]
+ENTRYPOINT ["./user-cli"]
 
 CMD ["./user-cli"]

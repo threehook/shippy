@@ -1,17 +1,20 @@
 package main
 
 import (
-	"gopkg.in/mgo.v2"
+	"context"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"log"
+	"time"
 )
 
-// CreateSession creates the main session to our mongodb instance
-func CreateSession(host string) (*mgo.Session, error) {
-	session, err := mgo.Dial(host)
+func CreateDb(host string) *mongo.Client {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	clientOptions := options.Client().ApplyURI(host)
+	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
-		return nil, err
+		log.Fatal(err)
 	}
-
-	session.SetMode(mgo.Monotonic, true)
-
-	return session, nil
+	return client
 }

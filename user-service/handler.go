@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"log"
 
 	pb "github.com/threehook/shippy/user-service/proto/user"
@@ -58,6 +59,7 @@ func (srv *service) Create(ctx context.Context, req *pb.User, res *pb.Response) 
 
 	// Generates a hashed version of our password
 	hashedPass, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+	fmt.Println("Joepie: ")
 	if err != nil {
 		return err
 	}

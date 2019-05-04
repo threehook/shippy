@@ -36,7 +36,6 @@ func main() {
 		host = mongoURI
 	}
 
-	//session, err := CreateSession(host)
 	client := CreateDb(host)
 	repo := &VesselRepository{client}
 
