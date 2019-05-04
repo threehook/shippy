@@ -1,6 +1,6 @@
 FROM golang:1.12.2 as builder
 
-WORKDIR /go/src/github.com/threehook/shippy/vessel-service
+WORKDIR /go/src/github.com/EwanValentine/shippy/user-cli
 
 # Force the go compiler to use modules
 ENV GO111MODULE=on
@@ -19,13 +19,15 @@ RUN go mod download
 # Here we copy the rest of the source code
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o vessel-service -a -installsuffix cgo main.go repository.go handler.go datastore.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo .
 
 FROM alpine:latest
 
 RUN apk --no-cache add ca-certificates
 
 WORKDIR /app
-COPY --from=builder /go/src/github.com/threehook/shippy/vessel-service/vessel-service .
+COPY --from=builder /go/src/github.com/threehook/shippy/user-cli/user-cli .
 
-CMD ["./vessel-service"]
+#ENTRYPOINT ["./user-cli"]
+
+CMD ["./user-cli"]

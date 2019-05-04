@@ -1,0 +1,14 @@
+.search-input {
+  width: 500px;
+}
+
+.add-draft-button {
+  position: absolute;
+  top:0;
+  right:0;
+  z-index:2;
+}
+
+.draft-card {
+  min-width: 20em;
+}

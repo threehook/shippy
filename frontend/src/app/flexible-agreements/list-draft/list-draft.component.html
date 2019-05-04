@@ -1,0 +1,39 @@
+<mat-card>
+  <mat-card-title>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <span>Saved draft contracts</span>
+        <span fxFlex="1 1 auto"></span>
+        <button mat-fab (click)='openAddDialog()' class="add-draft-button" matTooltip="Create a new draft">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </mat-card-title>
+  <mat-card-content>
+
+    <div fxLayout="row" fxLayoutAlign="space-between">
+      <mat-form-field class="search-input">
+        <input type="text" matInput placeholder="Search drafts" cdkFocusInitial>
+        <button mat-button color="primary" matSuffix mat-icon-button aria-label="search">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutAlign="start">
+      <span *ngIf="hasNoDrafts()">There are no draft discount agreements. To start create a discount agreement by
+        clicking the + button.</span>
+      <mat-card *ngFor="let draft of drafts" class="draft-card">
+        <mat-card-title>{{draft.name}}</mat-card-title>
+        <mat-card-content>
+          <p>
+            {{draft.description}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button [routerLink]="['../edit', draft.id]">EDIT</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-card-content>
+</mat-card>

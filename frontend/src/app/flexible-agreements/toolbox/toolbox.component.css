@@ -1,0 +1,46 @@
+
+.add-settlement-button {
+  position: absolute;
+  top:0;
+  right:10%;
+  z-index:2;
+}
+
+.toolbox-button {
+  width: 100%;
+}
+
+.toolbox-list {
+  width: 500px;
+  max-width: 100%;
+  border: solid 1px #ccc;
+  min-height: 60px;
+  display: block;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.toolbox-item {
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+}
+
+.toolbox-item:last-child {
+  border: none;
+}
+
+:host
+{
+  position: fixed;
+  display: block;
+}

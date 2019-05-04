@@ -1,0 +1,44 @@
+<mat-toolbar color="primary">
+  <button id="menu_button" mat-icon-button (click)="toggleMenu()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span>Discount Agreement Composer</span>
+</mat-toolbar>
+<mat-sidenav-container class="sidebar">
+  <mat-sidenav mode="side" [opened]="menuOpened" class="menu">
+    <mat-list>
+      <h3 mat-subheader="">Discount Agreements</h3>
+
+      <mat-list-item
+        id="agreements"
+        [routerLink]="['/agreements/list']"
+        class="menu-item pointer"
+      >
+        <mat-icon mat-list-icon>assignment</mat-icon>
+        <h3 mat-line>Contracts</h3>
+      </mat-list-item>
+      <mat-list-item
+        id="drafts"
+        [routerLink]="['/agreements/drafts']"
+        class="menu-item pointer"
+      >
+        <mat-icon mat-list-icon>assignment</mat-icon>
+        <h3 mat-line>Drafts</h3>
+      </mat-list-item>
+      <mat-list-item
+        id="templates"
+        [routerLink]="['/agreements/templates']"
+        class="menu-item pointer"
+      >
+        <mat-icon mat-list-icon>assignment</mat-icon>
+        <h3 mat-line>Templates</h3>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

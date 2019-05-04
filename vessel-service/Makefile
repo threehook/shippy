@@ -2,5 +2,7 @@ build:
 	protoc -I. --micro_out=${GOPATH}/src/github.com/threehook/shippy/vessel-service --go_out=${GOPATH}/src/github.com/threehook/shippy/vessel-service proto/vessel/vessel.proto
 	docker build -t vessel-service .
 
-run:
-	docker run -p 50052:50051 -e MICRO_SERVER_ADDRESS=:50051 -e MICRO_REGISTRY=mdns vessel-service
+all: build
+
+run: all
+	docker-compose up

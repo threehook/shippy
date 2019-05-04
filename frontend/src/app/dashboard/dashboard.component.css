@@ -1,0 +1,20 @@
+.menu {
+  min-height: 80vh;
+  min-width: 250px;
+}
+
+.sidebar {
+  min-height: 80vh;
+}
+
+.content {
+  padding: 15px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.menu-item {
+  font-size: 14px;
+}

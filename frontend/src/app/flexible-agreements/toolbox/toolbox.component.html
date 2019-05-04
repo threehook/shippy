@@ -1,0 +1,62 @@
+<button mat-fab class="add-settlement-button" matTooltip="Add commercial condition" (click)="addNewSettlement()">
+  <mat-icon>add</mat-icon>
+</button>
+<mat-card fxFlex="90">
+  <mat-card-title>
+    <mat-toolbar color="primary">
+      <mat-icon>build</mat-icon>
+      <span>Toolbox</span>
+    </mat-toolbar>
+  </mat-card-title>
+  <mat-card-content>
+    <h4>Generic</h4>
+    <div class="toolbox-list">
+      <div class="toolbox-item" draggable="true" type="info" (dragstart)="dragStart($event)" fxLayout="row">
+        <span>Contract text</span>
+        <button mat-icon-button matTooltip="Add contract text."><mat-icon>info</mat-icon></button>
+      </div>
+    </div>
+    <h4>Conditions</h4>
+    <div class="toolbox-list" id="conditionDropList">
+      <div class="toolbox-item" draggable="true" type="limit" (dragstart)="dragStart($event)" fxLayout="row">
+        <span>Limit</span>
+        <button mat-icon-button matTooltip="With the limit condition you specify a limit on a predefined variables."><mat-icon>info</mat-icon></button>
+      </div>
+      <div class="toolbox-item" draggable="true" type="zone" (dragstart)="dragStart($event)">
+        <span>Zone</span>
+        <button mat-icon-button matTooltip="With the zone condition you can include or exclude one or more zones."><mat-icon>info</mat-icon></button>
+      </div>
+      <div class="toolbox-item" draggable="true" type="ratio" (dragstart)="dragStart($event)">
+        <span>Ratio</span>
+        <button mat-icon-button matTooltip="With the ratio condition you can define a ratio between two calltypes."><mat-icon>info</mat-icon></button>
+      </div>
+      <div class="toolbox-item" draggable="true" type="range" (dragstart)="dragStart($event)">
+        <span>Range</span>
+        <button mat-icon-button matTooltip="With the range condition you can specify a range..."><mat-icon>info</mat-icon></button>
+      </div>
+    </div>
+    <h4>Actions</h4>
+    <div class="toolbox-list">
+      <div class="toolbox-item" draggable="true" type="discount" (dragstart)="dragStart($event)">
+        <span>Discount</span>
+        <button mat-icon-button matTooltip="With the discount action you can specify a discount on the IOR Rate."><mat-icon>info</mat-icon></button>
+      </div>
+      <div class="toolbox-item" draggable="true" type="discountedrate" (dragstart)="dragStart($event)">
+        <span>DiscountedRate</span>
+        <button mat-icon-button matTooltip="With the discountedrate action you can specify a new discounted rate."><mat-icon>info</mat-icon></button>
+      </div>
+      <div class="toolbox-item" draggable="true" type="fixed" (dragstart)="dragStart($event)">
+        <span>Fixed</span>
+        <button mat-icon-button matTooltip="With the fixed action you can specify a new fixed value."><mat-icon>info</mat-icon></button>
+      </div>
+      <div class="toolbox-item" draggable="true" type="commitment" (dragstart)="dragStart($event)">
+        <span>Commit</span>
+        <button mat-icon-button matTooltip="With the commit action you can specify a commit level."><mat-icon>info</mat-icon></button>
+      </div>
+      <div class="toolbox-item" draggable="true" type="variable" (dragstart)="dragStart($event)">
+        <span>Variable</span>
+        <button mat-icon-button matTooltip="With the variable action you can use one of the predefined variables as output."><mat-icon>info</mat-icon></button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
